@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-
 <html>
+
+<!-- with Mike -->
+
     <head>
-        <meta charset="UTF-8">
+        <meta charset="utf-8">
         <link href="style.css" type="text/css" rel="stylesheet">
     </head>
     <body>
@@ -21,96 +23,6 @@
                 <button id="reset" onclick='reset()' disabled>Reset</button>
             </div>
         </div>
-        <script>
-
-            // const millisecondsIn25Minutes = 1500000;
-            const millisecondsIn25Minutes = 10000;
-            let state = 'ready';
-            let startButton = document.getElementById("start")
-            let pauseButton = document.getElementById("pause")
-            let resetButton = document.getElementById("reset")
-            let endTime;
-            let timeRemaining;
-            let currentTime = 0;
-            let interval;
-            var audio = new Audio('triangle.mp3');
-
-            function updateState(newState) {
-                state = newState 
-                if (state === "ready") {
-                    startButton.disabled = false;
-                    pauseButton.disabled = true;
-                    resetButton.disabled = true;
-                    clearInterval(interval);
-                } else if (state === 'counting') {
-                    startButton.disabled = true;
-                    pauseButton.disabled = false;
-                    resetButton.disabled = false;
-                } else if (state === 'blinking') {
-                    startButton.disabled = true;
-                    pauseButton.disabled = true;
-                    resetButton.disabled = false;
-                    clearInterval(interval);
-                } else if (state === 'stopped') {
-                    startButton.disabled = false;
-                    pauseButton.disabled = true;
-                    resetButton.disabled = false;
-                    clearInterval(interval);
-                }
-            }
-
-            function start() {
-                updateState('counting');
-                let startTime = Date.now();
-                endTime = startTime + millisecondsIn25Minutes;
-                tick();
-            }
-
-           function tick() {
-                interval = setInterval(calculateTimeRemaining, 100);
-            }    
-            function calculateTimeRemaining() {
-                currentTime = Date.now();
-                timeRemaining = endTime - currentTime;
-                updateClock(timeRemaining);
-            }
-
-            function updateClock(timeRemaining) {
-                let clock = document.getElementById('clock-h2');
-                if (timeRemaining >= 0) {
-                    let minutes = timeRemaining / 60000;
-                    let minutesWithoutSeconds = Math.trunc(minutes);
-                    let seconds = Math.trunc((minutes - minutesWithoutSeconds) * 60);
-                    if (seconds<10) {
-                        clock.textContent = minutesWithoutSeconds + ":0" + seconds;    
-                    } else {
-                    clock.textContent = minutesWithoutSeconds + ":" + seconds;
-                    }   
-                }
-                if (timeRemaining <= 0) {
-                    audio.play()
-                    //toggle background color
-                    updateState('blinking');
-                }
-            }
-
-            function pause() {
-                updateState('stopped')
-                startButton.setAttribute("onclick", "unpause()");
-            }
-            
-            function unpause() {
-                let tempTimeRemaining = timeRemaining; 
-                console.log(tempTimeRemaining);             
-                updateClock(tempTimeRemaining);
-            }
-
-            function reset() {  
-                currentTime = 0;
-                updateState('ready')
-                start();
-            }
-            
-        </script>
+        <script src="main.js"></script>
     </body>
 </html>
