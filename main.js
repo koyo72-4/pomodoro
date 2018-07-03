@@ -20,7 +20,8 @@ function updateState(newState) {
         startButton.disabled = false;
         pauseButton.disabled = true;
         resetButton.disabled = true;
-        clearInterval(colorInterval);
+        clearInterval(colorInterval)
+        document.body.style.backgroundColor = "white";
         clearInterval(interval);
     } else if (state === 'counting') {
         startButton.disabled = true;
